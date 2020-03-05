@@ -9,6 +9,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -59,9 +60,14 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mp;
     private LinearLayout payLayout;
     private Button payButton;
+    private Button clearButton;
+
+    private String savedCustomerId;
 
     // Stripe payments
-    private static final String BACKEND_URL = "https://35.160.50.162/gradual/public/";
+//    private static final String BACKEND_URL = "https://getgradual.com/gradual-api/public/api/";
+    private static final String BACKEND_URL = "https://192.168.2.101/gradual-api/public/api/";
+
     private OkHttpClient httpClient = getUnsafeOkHttpClient();
     private Stripe stripe;
 
@@ -75,14 +81,20 @@ public class MainActivity extends AppCompatActivity {
         donateButton = findViewById(R.id.donateButton);
         payLayout = findViewById(R.id.payLayout);
         payButton = findViewById(R.id.payButton);
+        clearButton = findViewById(R.id.clearButton);
 
         MediaPlayer mp = MediaPlayer.create(this, R.raw.sound01);
+
+        // Load saved customer id
+        savedCustomerId = loadCustomerId();
 
         // Button
         donateButton.setOnClickListener(v -> {
             // Play sound
-            mp.seekTo(0);
-            mp.start();
+            if (BuildConfig.BUILD_TYPE.equalsIgnoreCase("release")) {
+                mp.seekTo(0);
+                mp.start();
+            }
 
             // Play animation
             donateLAV.setProgress(0);
@@ -97,6 +109,16 @@ public class MainActivity extends AppCompatActivity {
         payButton.setOnClickListener((View view) -> pay());
 
         loadPage();
+
+        // Clear
+        clearButton.setOnClickListener(v -> {
+            savedCustomerId = "";
+            saveCustomerId(savedCustomerId);
+
+            loadPage();
+
+            Toast.makeText(this, "Saved Card Information is cleared!", Toast.LENGTH_LONG).show();
+        });
     }
 
     private void loadPage() {
@@ -106,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
         // For added security, our sample app gets the publishable key from the server
         Request request = new Request.Builder()
-                .url(BACKEND_URL + "stripe-key.php")
+                .url(BACKEND_URL + "stripe-key")
                 .get()
                 .build();
         httpClient.newCall(request)
@@ -114,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
         //
         payLayout.setVisibility(View.INVISIBLE);
-        payButton.setEnabled(true);
+        payButton.setVisibility(View.INVISIBLE);
     }
 
     private void setAnimationListener() {
@@ -126,8 +148,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-//                Toast.makeText(MainActivity.this, "Animation end!", Toast.LENGTH_LONG).show();
-                payLayout.setVisibility(View.VISIBLE);
+                if (savedCustomerId.isEmpty()) {
+                    payLayout.setVisibility(View.VISIBLE);
+                } else {
+                    payLayout.setVisibility(View.GONE);
+                }
+
+                payButton.setVisibility(View.VISIBLE);
+                payButton.setEnabled(true);
             }
 
             @Override
@@ -150,31 +178,54 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void pay() {
-        //
+        // Update UI
         payButton.setEnabled(false);
 
-        //
-        CardInputWidget cardInputWidget = findViewById(R.id.cardInputWidget);
-        PaymentMethodCreateParams params = cardInputWidget.getPaymentMethodCreateParams();
+        if (!savedCustomerId.isEmpty()) {
+            payWithCustomer(savedCustomerId);
+        } else {
+            // Pay with card
+            CardInputWidget cardInputWidget = findViewById(R.id.cardInputWidget);
+            PaymentMethodCreateParams params = cardInputWidget.getPaymentMethodCreateParams();
 
-        if (params == null) {
-            return;
+            if (params != null) {
+                stripe.createPaymentMethod(params, new ApiResultCallback<PaymentMethod>() {
+                    @Override
+                    public void onSuccess(@NonNull PaymentMethod result) {
+                        // Create and confirm the PaymentIntent by calling the sample server's /pay endpoint.
+                        payWithCard(result.id, null);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Exception e) {
+
+                    }
+                });
+            }
         }
-        stripe.createPaymentMethod(params, new ApiResultCallback<PaymentMethod>() {
-            @Override
-            public void onSuccess(@NonNull PaymentMethod result) {
-                // Create and confirm the PaymentIntent by calling the sample server's /pay endpoint.
-                pay(result.id, null);
-            }
-
-            @Override
-            public void onError(@NonNull Exception e) {
-
-            }
-        });
     }
 
-    private void pay(@Nullable String paymentMethodId, @Nullable String paymentIntentId) {
+    private void payWithCustomer(@Nullable String customerId) {
+        final MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+        final String json;
+        json = "{"
+                + "\"customerId\":" +  "\"" + customerId  + "\","
+                + "\"items\":["
+                + "{\"id\":\"photo_subscription\"}"
+                + "]"
+                + "}";
+
+        RequestBody body = RequestBody.create(json, mediaType);
+        Request request = new Request.Builder()
+                .url(BACKEND_URL + "charge-card-off-session")
+                .post(body)
+                .build();
+        httpClient
+                .newCall(request)
+                .enqueue(new PayCallback(this, stripe));
+    }
+
+    private void payWithCard(@Nullable String paymentMethodId, @Nullable String paymentIntentId) {
         final MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         final String json;
         if (paymentMethodId != null) {
@@ -193,7 +244,8 @@ public class MainActivity extends AppCompatActivity {
         }
         RequestBody body = RequestBody.create(json, mediaType);
         Request request = new Request.Builder()
-                .url(BACKEND_URL + "pay.php")
+//                .url(BACKEND_URL + "pay")
+                .url(BACKEND_URL + "charge-card-off-session")
                 .post(body)
                 .build();
         httpClient
@@ -269,13 +321,15 @@ public class MainActivity extends AppCompatActivity {
             if (!response.isSuccessful()) {
                 activity.runOnUiThread(() -> Toast.makeText(activity,
                         "Error: " + response.toString(), Toast.LENGTH_LONG).show());
+                activity.payButton.setEnabled(true);
             } else {
                 Gson gson = new Gson();
                 Type type = new TypeToken<Map<String, String>>(){}.getType();
                 final ResponseBody responseBody = response.body();
                 final Map<String, String> responseMap;
                 if (responseBody != null) {
-                    responseMap = gson.fromJson(responseBody.string(), type);
+                    String responseString = responseBody.string();
+                    responseMap = gson.fromJson(responseString, type);
                 } else {
                     responseMap = new HashMap<>();
                 }
@@ -337,6 +391,10 @@ public class MainActivity extends AppCompatActivity {
                 String error = responseMap.get("error");
                 String paymentIntentClientSecret = responseMap.get("clientSecret");
                 String requiresAction = responseMap.get("requiresAction");
+                String customerId = responseMap.get("customerId");
+
+                // save customer id
+                activity.saveCustomerId(customerId);
 
                 if (error != null) {
                     activity.displayAlert("Error", error, false);
@@ -345,7 +403,7 @@ public class MainActivity extends AppCompatActivity {
                         activity.runOnUiThread(() ->
                                 stripe.handleNextActionForPayment(activity, paymentIntentClientSecret));
                     } else {
-                        activity.displayAlert("Donation succeeded",
+                        activity.displayAlert("Donation succeeded! \r\n Customer : " + customerId,
                                 "Thank you", true);
                     }
                 }
@@ -396,7 +454,7 @@ public class MainActivity extends AppCompatActivity {
                 // and confirm it to finalize the payment. This step enables your integration to
                 // synchronously fulfill the order on your backend and return the fulfillment result
                 // to your client.
-                activity.pay(null, paymentIntent.getId());
+                activity.payWithCard(null, paymentIntent.getId());
             }
         }
 
@@ -455,5 +513,21 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void saveCustomerId(String customerId) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("CUSTOMER_ID", customerId);
+        editor.commit();
+
+        savedCustomerId = customerId;
+    }
+
+    private String loadCustomerId() {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        String customerId = sharedPref.getString("CUSTOMER_ID", "");
+
+        return customerId;
     }
 }
