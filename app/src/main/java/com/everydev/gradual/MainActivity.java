@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
     private String savedCustomerId;
 
     // Stripe payments
-//    private static final String BACKEND_URL = "https://getgradual.com/gradual-api/public/api/";
-    private static final String BACKEND_URL = "https://192.168.2.101/gradual-api/public/api/";
+    private static final String BACKEND_URL = "https://getgradual.com/gradual-api/public/api/";
+//    private static final String BACKEND_URL = "https://192.168.2.101/gradual-api/public/api/";
 
     private OkHttpClient httpClient = getUnsafeOkHttpClient();
     private Stripe stripe;
@@ -189,6 +189,14 @@ public class MainActivity extends AppCompatActivity {
             PaymentMethodCreateParams params = cardInputWidget.getPaymentMethodCreateParams();
 
             if (params != null) {
+                if (stripe == null) {
+                    Toast.makeText(this, "Processing stripe error. Please check the public key API.",
+                            Toast.LENGTH_LONG).show();
+
+                    payButton.setEnabled(true);
+                    return;
+                }
+
                 stripe.createPaymentMethod(params, new ApiResultCallback<PaymentMethod>() {
                     @Override
                     public void onSuccess(@NonNull PaymentMethod result) {
@@ -403,7 +411,9 @@ public class MainActivity extends AppCompatActivity {
                         activity.runOnUiThread(() ->
                                 stripe.handleNextActionForPayment(activity, paymentIntentClientSecret));
                     } else {
-                        activity.displayAlert("Donation succeeded! \r\n Customer : " + customerId,
+//                        activity.displayAlert("Donation succeeded! \r\n Customer : " + customerId,
+//                                "Thank you", true);
+                        activity.displayAlert("Donation succeeded!",
                                 "Thank you", true);
                     }
                 }
