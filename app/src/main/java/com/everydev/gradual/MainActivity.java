@@ -68,13 +68,19 @@ public class MainActivity extends AppCompatActivity {
     private static final String BACKEND_URL = "https://getgradual.com/gradual-api/public/api/";
 //    private static final String BACKEND_URL = "https://192.168.2.101/gradual-api/public/api/";
 
-    private OkHttpClient httpClient = getUnsafeOkHttpClient();
+    private OkHttpClient httpClient;
     private Stripe stripe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (BuildConfig.BUILD_TYPE.equalsIgnoreCase("release")) {
+            httpClient = new OkHttpClient();
+        } else {
+            httpClient = getUnsafeOkHttpClient();
+        }
 
         // Get views
         donateLAV = findViewById(R.id.lavDonate);
