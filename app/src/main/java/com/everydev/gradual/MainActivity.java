@@ -223,10 +223,7 @@ public class MainActivity extends AppCompatActivity {
         final MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         final String json;
         json = "{"
-                + "\"customerId\":" +  "\"" + customerId  + "\","
-                + "\"items\":["
-                + "{\"id\":\"photo_subscription\"}"
-                + "]"
+                + "\"customer_id\":" +  "\"" + customerId  + "\""
                 + "}";
 
         RequestBody body = RequestBody.create(json, mediaType);
@@ -244,21 +241,15 @@ public class MainActivity extends AppCompatActivity {
         final String json;
         if (paymentMethodId != null) {
             json = "{"
-                    + "\"useStripeSdk\":true,"
-                    + "\"paymentMethodId\":" + "\"" + paymentMethodId + "\","
-                    + "\"currency\":\"usd\","
-                    + "\"items\":["
-                    + "{\"id\":\"photo_subscription\"}"
-                    + "]"
+                    + "\"payment_method_id\":" + "\"" + paymentMethodId + "\""
                     + "}";
         } else {
             json = "{"
-                    + "\"paymentIntentId\":" +  "\"" + paymentIntentId + "\""
+                    + "\"payment_intent_id\":" +  "\"" + paymentIntentId + "\""
                     + "}";
         }
         RequestBody body = RequestBody.create(json, mediaType);
         Request request = new Request.Builder()
-//                .url(BACKEND_URL + "pay")
                 .url(BACKEND_URL + "charge-card-off-session")
                 .post(body)
                 .build();
