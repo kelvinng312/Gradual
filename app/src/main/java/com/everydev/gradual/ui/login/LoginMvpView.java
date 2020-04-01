@@ -3,7 +3,7 @@ package com.everydev.gradual.ui.login;
 import com.everydev.gradual.ui.base.MvpView;
 
 public interface LoginMvpView extends MvpView {
-    void onLoginSuccess(UserProfile mUser);
+    void onLoginSuccess();
 
     String getEmail();
 

@@ -9,11 +9,15 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"https://getgradual.com/api/\"")
-        buildConfigField("String", "API_KEY", "\"REPLACE YOUR API_KEY\"")
+//        buildConfigField("String", "API_KEY", "\"REPLACE YOUR API_KEY\"")
     }
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"http://192.168.2.125:8000/api/\"")
+        }
         release {
+            buildConfigField("String", "BASE_URL", "\"https://getgradual.com/api/\"")
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

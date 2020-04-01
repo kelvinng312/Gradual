@@ -65,7 +65,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     }
 
     @Override
-    public void onLoginSuccess(UserProfile mUser) {
+    public void onLoginSuccess() {
         startActivity(MainActivity.getStartIntent(this));
     }
 

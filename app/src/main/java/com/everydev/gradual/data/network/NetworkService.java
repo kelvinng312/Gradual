@@ -45,7 +45,6 @@ public interface NetworkService {
     Single<WrapperResponse<Response>> payConfirm(PayConfirmRequest payConfirmRequest);
 
 
-
     @GET("feed.json")
     Single<WrapperResponse<List<FeedItem>>> getFeedList();
 

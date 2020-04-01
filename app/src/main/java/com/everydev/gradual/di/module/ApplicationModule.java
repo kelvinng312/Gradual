@@ -61,11 +61,11 @@ public class ApplicationModule {
         return AppConstant.DB_NAME;
     }
 
-    @Provides
-    @ApiInfo
-    String provideApiKey() {
-        return BuildConfig.API_KEY;
-    }
+//    @Provides
+//    @ApiInfo
+//    String provideApiKey() {
+//        return BuildConfig.API_KEY;
+//    }
 
     @Provides
     @PreferenceInfo

@@ -30,14 +30,15 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
                         return;
                     }
                     // set demo user
-                    UserProfile mProfile = new UserProfile();
-                    mProfile.setFirstName("Dinesh");
-                    mProfile.setLastName("Kumar");
-                    mProfile.setEmail("dinesh@gmail.com");
-                    mProfile.setUserId("1");
+//                    UserProfile mProfile = new UserProfile();
+//                    mProfile.setFirstName("Dinesh");
+//                    mProfile.setLastName("Kumar");
+//                    mProfile.setEmail("dinesh@gmail.com");
+//                    mProfile.setUserId("1");
                     //update preferences
-                    getDataManager().updateUserInfo("access toekn", 1l, LoggedInMode.LOGGED_IN_MODE_SERVER, "", mProfile.getEmail(), "");
-                    getMvpView().onLoginSuccess(mProfile);
+                    getDataManager().updateUserInfo("access toekn", 1l, LoggedInMode.LOGGED_IN_MODE_SERVER,
+                            "", "mProfile.getEmail()", "");
+                    getMvpView().onLoginSuccess();
 
                     getMvpView().hideLoading();
                 }, 1000);

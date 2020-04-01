@@ -6,6 +6,15 @@ import com.everydev.gradual.data.db.AppDatabase;
 import com.everydev.gradual.data.db.model.User;
 import com.everydev.gradual.data.network.RestApiHelper;
 import com.everydev.gradual.data.network.pojo.FeedItem;
+import com.everydev.gradual.data.network.pojo.LoginRequest;
+import com.everydev.gradual.data.network.pojo.LoginResponse;
+import com.everydev.gradual.data.network.pojo.PayAgainRequest;
+import com.everydev.gradual.data.network.pojo.PayConfirmRequest;
+import com.everydev.gradual.data.network.pojo.PayFirstRequest;
+import com.everydev.gradual.data.network.pojo.Response;
+import com.everydev.gradual.data.network.pojo.SignupRequest;
+import com.everydev.gradual.data.network.pojo.SignupResponse;
+import com.everydev.gradual.data.network.pojo.StripeKeyResponse;
 import com.everydev.gradual.data.network.pojo.WrapperResponse;
 import com.everydev.gradual.data.prefs.PreferencesHelper;
 import com.everydev.gradual.data.utils.LoggedInMode;
@@ -99,8 +108,33 @@ public class BaseDataManager implements DataManager {
     }
 
     @Override
-    public Single<WrapperResponse<UserProfile>> doLoginApiCall(LoginRequest_old request) {
-        return mApiHelper.doLoginApiCall(request);
+    public Single<WrapperResponse<LoginResponse>> login(LoginRequest loginRequest) {
+        return mApiHelper.login(loginRequest);
+    }
+
+    @Override
+    public Single<WrapperResponse<SignupResponse>> signup(SignupRequest signupRequest) {
+        return mApiHelper.signup(signupRequest);
+    }
+
+    @Override
+    public Single<WrapperResponse<StripeKeyResponse>> stripeKey() {
+        return mApiHelper.stripeKey();
+    }
+
+    @Override
+    public Single<WrapperResponse<Response>> payFirst(PayFirstRequest payFirstRequest) {
+        return mApiHelper.payFirst(payFirstRequest);
+    }
+
+    @Override
+    public Single<WrapperResponse<Response>> payAgain(PayAgainRequest payAgainRequest) {
+        return mApiHelper.payAgain(payAgainRequest);
+    }
+
+    @Override
+    public Single<WrapperResponse<Response>> payConfirm(PayConfirmRequest payConfirmRequest) {
+        return mApiHelper.payConfirm(payConfirmRequest);
     }
 
     @Override
@@ -202,4 +236,6 @@ public class BaseDataManager implements DataManager {
     public void logoutUser() {
         mPreferencesHelper.logoutUser();
     }
+
+
 }

@@ -59,7 +59,7 @@ public class SignupActivity extends BaseActivity implements SignupMvpView {
     }
 
     @Override
-    public void onSignupSuccess(UserProfile mUser) {
+    public void onSignupSuccess() {
 
     }
 }
