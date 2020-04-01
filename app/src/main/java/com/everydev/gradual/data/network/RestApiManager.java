@@ -30,17 +30,17 @@ public class RestApiManager implements RestApiHelper {
     }
 
     @Override
-    public Single<WrapperResponse<LoginResponse>> login(LoginRequest loginRequest) {
+    public Single<LoginResponse> login(LoginRequest loginRequest) {
         return mService.login(loginRequest);
     }
 
     @Override
-    public Single<WrapperResponse<SignupResponse>> signup(SignupRequest signupRequest) {
+    public Single<SignupResponse> signup(SignupRequest signupRequest) {
         return mService.signup(signupRequest);
     }
 
     @Override
-    public Single<WrapperResponse<StripeKeyResponse>> stripeKey() {
+    public Single<StripeKeyResponse> stripeKey() {
         return mService.stripeKey();
     }
 

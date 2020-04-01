@@ -10,5 +10,4 @@ import java.util.List;
  * Author     : AndroidWave
  */
 public interface MainMvpView extends MvpView {
-    void updateFeed(List<FeedItem> feedItemList);
 }

@@ -56,6 +56,10 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
             startActivity(SignupActivity.getStartIntent(this));
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
+
+        // test
+        mEdtEmail.setText("test5@gmail.com");
+        mEdtPassword.setText("11111111");
     }
 
     @Override
@@ -71,22 +75,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
     @Override
     public String getEmail() {
-        return mEdtEmail.getText().toString();
-    }
-
-    @Override
-    public String getEdtPassword() {
-        return mEdtPassword.getText().toString();
-    }
-
-    @Override
-    public void showInputError() {
-        showMessage(getString(R.string.input_invalid));
-    }
-
-    @Override
-    public void setEdtPassword(String edtPassword) {
-        mEdtEmail.setText(edtPassword);
+        return mEdtEmail.getText().toString().trim();
     }
 
     @Override
@@ -94,6 +83,29 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
         mEdtPassword.setText(email);
     }
 
+    @Override
+    public String getPassword() {
+        return mEdtPassword.getText().toString().trim();
+    }
 
+    @Override
+    public void setPassword(String edtPassword) {
+        mEdtEmail.setText(edtPassword);
+    }
+
+    @Override
+    public boolean validate() {
+        if (getEmail().isEmpty()) {
+            showMessage(getString(R.string.email_invalid));
+            return false;
+        }
+
+        if (getPassword().isEmpty()) {
+            showMessage(getString(R.string.password_invalid));
+            return false;
+        }
+
+        return true;
+    }
 }
 

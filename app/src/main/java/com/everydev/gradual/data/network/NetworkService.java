@@ -27,13 +27,13 @@ import retrofit2.http.POST;
 public interface NetworkService {
 
     @POST("auth/login")
-    Single<WrapperResponse<LoginResponse>> login(@Body LoginRequest loginRequest);
+    Single<LoginResponse> login(@Body LoginRequest loginRequest);
 
     @POST("auth/signup")
-    Single<WrapperResponse<SignupResponse>> signup(@Body SignupRequest signupRequest);
+    Single<SignupResponse> signup(@Body SignupRequest signupRequest);
 
     @GET("donation/stripe-key")
-    Single<WrapperResponse<StripeKeyResponse>> stripeKey();
+    Single<StripeKeyResponse> stripeKey();
 
     @POST("donation/pay-first")
     Single<WrapperResponse<Response>> payFirst(PayFirstRequest payFirstRequest);

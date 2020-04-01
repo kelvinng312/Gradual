@@ -18,11 +18,11 @@ import io.reactivex.Single;
 
 public interface RestApiHelper {
 
-    Single<WrapperResponse<LoginResponse>> login(LoginRequest loginRequest);
+    Single<LoginResponse> login(LoginRequest loginRequest);
 
-    Single<WrapperResponse<SignupResponse>> signup(SignupRequest signupRequest);
+    Single<SignupResponse> signup(SignupRequest signupRequest);
 
-    Single<WrapperResponse<StripeKeyResponse>> stripeKey();
+    Single<StripeKeyResponse> stripeKey();
 
     Single<WrapperResponse<Response>> payFirst(PayFirstRequest payFirstRequest);
 

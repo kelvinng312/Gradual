@@ -108,17 +108,17 @@ public class BaseDataManager implements DataManager {
     }
 
     @Override
-    public Single<WrapperResponse<LoginResponse>> login(LoginRequest loginRequest) {
+    public Single<LoginResponse> login(LoginRequest loginRequest) {
         return mApiHelper.login(loginRequest);
     }
 
     @Override
-    public Single<WrapperResponse<SignupResponse>> signup(SignupRequest signupRequest) {
+    public Single<SignupResponse> signup(SignupRequest signupRequest) {
         return mApiHelper.signup(signupRequest);
     }
 
     @Override
-    public Single<WrapperResponse<StripeKeyResponse>> stripeKey() {
+    public Single<StripeKeyResponse> stripeKey() {
         return mApiHelper.stripeKey();
     }
 
