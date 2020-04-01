@@ -24,4 +24,15 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Font_family_light" parent="AppTheme">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="Font_family_regular" parent="AppTheme">
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
+    <style name="Signup_Button_Style" parent="Widget.AppCompat.Light.ActionButton">
+        <item name="android:background">#B10303</item>
+    </style>
 </resources>

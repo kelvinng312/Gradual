@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CleanCode</string>
+    <string name="app_name">Gradual</string>
     <string name="action_settings">Settings</string>
     <string name="some_error">Something went wrong</string>
     <string name="title_activity_login">Sign in</string>

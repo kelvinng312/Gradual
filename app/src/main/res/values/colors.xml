@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#E43F3F</color>
-    <color name="colorPrimaryDark">#E12929</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="black_effective">#2a2a2a</color>
-    <color name="colorPrimaryDarker">#CC1D1D</color>
+
+    <color name="dary">#028808</color>
+    <color name="colorPrimary">#02AA59</color>
+    <color name="colorPrimaryDark">#029F09</color>
+    <color name="colorPrimaryDarker">#019107</color>
+    <color name="colorAccent">#00ffc8</color>
+    <color name="colorAccentLightDark">#00ff83</color>
+    <color name="colorAccentDark">#00ff83</color>
+    <color name="collapsing">#00ff83</color>
+    <color name="mapping_color">#92ffe8</color>
+    <color name="mapping_color_dary">#77fde1</color>
+    <color name="app_background">#F5F5F5</color>
+
     <color name="accent">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
@@ -15,4 +23,21 @@
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="red_dark">#F06423</color>
+    <color name="red_dark2">#D85A1B</color>
+    <color name="cyan_light">#c9ebee</color>
+    <color name="cyan">#b5e3e7</color>
+    <color name="cyan_dark">#70BDC6</color>
+    <color name="blue">#007BCD</color>
+    <color name="light_blue">#55C8F0</color>
+    <color name="navy_blue">#214258</color>
+    <color name="navy_blue_dark">#1C3A4E</color>
+    <color name="light_green">#78DC96</color>
+    <color name="blue_black_dark">#13171d</color>
+    <color name="blue_black_light">#516179</color>
+    <color name="blue_grey_light">#A5B4C8</color>
+    <color name="orange">#FFA500</color>
+    <color name="yellow">#fff44f</color>
 </resources>
