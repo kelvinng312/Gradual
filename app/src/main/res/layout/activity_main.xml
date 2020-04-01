@@ -34,6 +34,16 @@
         android:paddingTop="56dp"
         android:paddingRight="24dp">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/donate_title" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lav_donate"
             android:layout_width="100dp"
@@ -46,6 +56,11 @@
             app:layout_constraintTop_toBottomOf="@+id/donateButton"
             app:lottie_autoPlay="false"
             app:lottie_fileName="button_anim.json" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
     </LinearLayout>
 </RelativeLayout>
