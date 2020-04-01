@@ -11,12 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.everydev.gradual.R;
 import com.everydev.gradual.data.network.pojo.FeedItem;
 import com.everydev.gradual.ui.base.BaseActivity;
 import com.everydev.gradual.utils.DividerItemDecoration;
+import com.stripe.android.view.CardInputWidget;
 
 import java.util.List;
 
@@ -35,6 +37,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     private MediaPlayer mPlayerDonate;
     private MediaPlayer mPlayerSuccess;
+
+    private LinearLayout mLayoutCard;
+    private CardInputWidget mCardInputWidget;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -57,6 +62,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mLavDonate = findViewById(R.id.lav_donate);
         mLavDonate.setProgress(1f);
         mLavDonate.setOnClickListener(v -> {
+            mLayoutCard.setVisibility(View.INVISIBLE);
+
             mPlayerDonate.seekTo(0);
             mPlayerDonate.start();
 
@@ -66,36 +73,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             mLavDonate.playAnimation();
 
         });
-
-//        mLavDonate.addAnimatorListener(new Animator.AnimatorListener() {
-//            @Override
-//            public void onAnimationStart(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                mLavDonate.setProgress(1f);
-//
-//                // Play success animation
-//                mLabSuccess.setProgress(0);
-//                mLabSuccess.pauseAnimation();
-//                mLabSuccess.playAnimation();
-//
-//                mPlayerSuccess.seekTo(0);
-//                mPlayerSuccess.start();
-//            }
-//
-//            @Override
-//            public void onAnimationCancel(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animator animation) {
-//
-//            }
-//        });
 
         // Success animation
         mLabSuccess = findViewById(R.id.lav_success);
@@ -150,6 +127,10 @@ public class MainActivity extends BaseActivity implements MainMvpView {
                 mLavDonate.setVisibility(View.VISIBLE);
             }
         });
+
+        // layout
+        mLayoutCard = findViewById(R.id.layout_card);
+        mCardInputWidget = findViewById(R.id.card_input_widget);
 
         // prepare
         mPresenter.onViewPrepared();
