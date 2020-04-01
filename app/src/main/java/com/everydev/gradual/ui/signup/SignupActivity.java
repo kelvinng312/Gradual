@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.everydev.gradual.R;
-import com.everydev.gradual.data.network.pojo.UserProfile;
 import com.everydev.gradual.ui.base.BaseActivity;
 import com.everydev.gradual.ui.login.LoginActivity;
 

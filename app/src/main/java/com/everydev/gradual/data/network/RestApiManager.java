@@ -1,8 +1,6 @@
 package com.everydev.gradual.data.network;
 
 import com.everydev.gradual.data.network.pojo.FeedItem;
-import com.everydev.gradual.data.network.pojo.LoginRequest;
-import com.everydev.gradual.data.network.pojo.UserProfile;
 import com.everydev.gradual.data.network.pojo.WrapperResponse;
 
 import java.util.List;
@@ -23,7 +21,7 @@ public class RestApiManager implements RestApiHelper {
     }
 
     @Override
-    public Single<WrapperResponse<UserProfile>> doLoginApiCall(LoginRequest request) {
+    public Single<WrapperResponse<UserProfile>> doLoginApiCall(LoginRequest_old request) {
         return mService.doLoginApiCall(request);
     }
 

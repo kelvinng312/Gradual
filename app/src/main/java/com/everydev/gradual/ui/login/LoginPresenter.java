@@ -3,7 +3,6 @@ package com.everydev.gradual.ui.login;
 import android.os.Handler;
 
 import com.everydev.gradual.data.DataManager;
-import com.everydev.gradual.data.network.pojo.UserProfile;
 import com.everydev.gradual.data.utils.LoggedInMode;
 import com.everydev.gradual.ui.base.BasePresenter;
 import com.everydev.gradual.utils.rx.SchedulerProvider;

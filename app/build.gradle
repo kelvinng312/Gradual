@@ -9,7 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"https://androidwave.com/api/\"")
+        buildConfigField("String", "BASE_URL", "\"https://getgradual.com/api/\"")
         buildConfigField("String", "API_KEY", "\"REPLACE YOUR API_KEY\"")
     }
     buildTypes {

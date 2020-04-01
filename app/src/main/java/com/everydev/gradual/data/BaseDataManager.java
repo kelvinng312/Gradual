@@ -6,8 +6,6 @@ import com.everydev.gradual.data.db.AppDatabase;
 import com.everydev.gradual.data.db.model.User;
 import com.everydev.gradual.data.network.RestApiHelper;
 import com.everydev.gradual.data.network.pojo.FeedItem;
-import com.everydev.gradual.data.network.pojo.LoginRequest;
-import com.everydev.gradual.data.network.pojo.UserProfile;
 import com.everydev.gradual.data.network.pojo.WrapperResponse;
 import com.everydev.gradual.data.prefs.PreferencesHelper;
 import com.everydev.gradual.data.utils.LoggedInMode;
@@ -101,7 +99,7 @@ public class BaseDataManager implements DataManager {
     }
 
     @Override
-    public Single<WrapperResponse<UserProfile>> doLoginApiCall(LoginRequest request) {
+    public Single<WrapperResponse<UserProfile>> doLoginApiCall(LoginRequest_old request) {
         return mApiHelper.doLoginApiCall(request);
     }
 
