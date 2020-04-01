@@ -1,12 +1,18 @@
 package com.everydev.gradual.ui.main;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.everydev.gradual.R;
 import com.everydev.gradual.data.network.pojo.FeedItem;
 import com.everydev.gradual.ui.base.BaseActivity;
@@ -21,11 +27,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends BaseActivity implements MainMvpView {
-
-    RecyclerView mRecyclerView;
-
     @Inject
     MainMvpPresenter<MainMvpView> mPresenter;
+
+    private LottieAnimationView mLavDonate;
+    private LottieAnimationView mLabSuccess;
+
+    private MediaPlayer mPlayerDonate;
+    private MediaPlayer mPlayerSuccess;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -44,6 +53,105 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     protected void setUp() {
+        // Donate animation
+        mLavDonate = findViewById(R.id.lav_donate);
+        mLavDonate.setProgress(1f);
+        mLavDonate.setOnClickListener(v -> {
+            mPlayerDonate.seekTo(0);
+            mPlayerDonate.start();
+
+            // Play animation
+            mLavDonate.setProgress(0);
+            mLavDonate.pauseAnimation();
+            mLavDonate.playAnimation();
+
+        });
+
+//        mLavDonate.addAnimatorListener(new Animator.AnimatorListener() {
+//            @Override
+//            public void onAnimationStart(Animator animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                mLavDonate.setProgress(1f);
+//
+//                // Play success animation
+//                mLabSuccess.setProgress(0);
+//                mLabSuccess.pauseAnimation();
+//                mLabSuccess.playAnimation();
+//
+//                mPlayerSuccess.seekTo(0);
+//                mPlayerSuccess.start();
+//            }
+//
+//            @Override
+//            public void onAnimationCancel(Animator animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animator animation) {
+//
+//            }
+//        });
+
+        // Success animation
+        mLabSuccess = findViewById(R.id.lav_success);
+        mLabSuccess.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLabSuccess.setProgress(0);
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+
+        // Donate sound
+        mPlayerDonate = MediaPlayer.create(this, R.raw.button_sound);
+        mPlayerDonate.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mLavDonate.setProgress(1f);
+                mLavDonate.setVisibility(View.INVISIBLE);
+
+                mPlayerSuccess.seekTo(0);
+                mPlayerSuccess.start();
+
+                // Play success animation
+                mLabSuccess.setProgress(0);
+                mLabSuccess.setRepeatCount(ValueAnimator.INFINITE);
+                mLabSuccess.playAnimation();
+            }
+        });
+
+        mPlayerSuccess = MediaPlayer.create(this, R.raw.success_sound);
+        mPlayerSuccess.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mLabSuccess.setProgress(0);
+                mLabSuccess.pauseAnimation();
+
+                mLavDonate.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // prepare
         mPresenter.onViewPrepared();
     }
 

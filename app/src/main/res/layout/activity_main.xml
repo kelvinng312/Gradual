@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bg_home"
@@ -10,7 +11,19 @@
         android:layout_height="match_parent"
         android:background="@color/black"
         android:alpha=".4"
-        />
+        >
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lav_success"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/donateButton"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="success_anim.json" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,18 +34,18 @@
         android:paddingTop="56dp"
         android:paddingRight="24dp">
 
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_login"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lav_donate"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/red_dark"
-            android:padding="18dp"
-            android:text="Donate"
-            android:textColor="@color/white" />
-
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/donateButton"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="button_anim.json" />
 
     </LinearLayout>
 </RelativeLayout>
