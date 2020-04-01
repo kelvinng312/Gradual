@@ -22,7 +22,7 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
     @Override
     public void onLoginClick() {
         if (getMvpView() != null) {
-            if (getMvpView().getEmail().trim().equals("") || getMvpView().getPassword().trim().equals("")) {
+            if (getMvpView().getEmail().trim().equals("") || getMvpView().getEdtPassword().trim().equals("")) {
                 getMvpView().showInputError();
             } else {
                 getMvpView().showLoading();

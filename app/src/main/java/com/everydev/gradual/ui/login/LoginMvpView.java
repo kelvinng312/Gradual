@@ -8,11 +8,11 @@ public interface LoginMvpView extends MvpView {
 
     String getEmail();
 
-    String getPassword();
+    String getEdtPassword();
 
     void showInputError();
 
-    void setPassword(String userId);
+    void setEdtPassword(String userId);
 
     void setEmail(String password);
 }
