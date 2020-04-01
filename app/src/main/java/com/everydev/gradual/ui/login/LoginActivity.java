@@ -48,13 +48,15 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
         mBtnLogin = findViewById(R.id.btn_login);
         mBtnLogin.setOnClickListener(v -> {
-          mPresenter.onLoginClick();
+            if (validate())
+                mPresenter.onLoginClick();
         });
 
         mTxtSignup = findViewById(R.id.txt_signup);
         mTxtSignup.setOnClickListener(v -> {
             startActivity(SignupActivity.getStartIntent(this));
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
         });
 
         // test
@@ -71,6 +73,8 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     @Override
     public void onLoginSuccess() {
         startActivity(MainActivity.getStartIntent(this));
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        finish();
     }
 
     @Override
@@ -79,22 +83,11 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     }
 
     @Override
-    public void setEmail(String email) {
-        mEdtPassword.setText(email);
-    }
-
-    @Override
     public String getPassword() {
         return mEdtPassword.getText().toString().trim();
     }
 
-    @Override
-    public void setPassword(String edtPassword) {
-        mEdtEmail.setText(edtPassword);
-    }
-
-    @Override
-    public boolean validate() {
+    private boolean validate() {
         if (getEmail().isEmpty()) {
             showMessage(getString(R.string.email_invalid));
             return false;

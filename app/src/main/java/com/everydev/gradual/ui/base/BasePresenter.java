@@ -1,7 +1,6 @@
 package com.everydev.gradual.ui.base;
 
 import com.everydev.gradual.data.DataManager;
-import com.everydev.gradual.data.network.WrapperError;
 import com.everydev.gradual.utils.rx.SchedulerProvider;
 import com.google.gson.JsonSyntaxException;
 
@@ -91,8 +90,6 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
                     mMvpView.onError(error.getLocalizedMessage());
 
             }
-        } else if (error instanceof WrapperError) {
-            mMvpView.onError(error.getMessage());
         } else if (error instanceof JsonSyntaxException) {
             mMvpView.onError("Something Went Wrong API is not responding properly!");
         } else {

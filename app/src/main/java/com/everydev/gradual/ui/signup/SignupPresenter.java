@@ -1,6 +1,8 @@
 package com.everydev.gradual.ui.signup;
 
 import com.everydev.gradual.data.DataManager;
+import com.everydev.gradual.data.network.pojo.LoginRequest;
+import com.everydev.gradual.data.network.pojo.SignupRequest;
 import com.everydev.gradual.ui.base.BasePresenter;
 import com.everydev.gradual.utils.rx.SchedulerProvider;
 
@@ -18,6 +20,40 @@ public class SignupPresenter<V extends SignupMvpView> extends BasePresenter<V>
 
     @Override
     public void onSignupClick() {
+        // check view
+        if (!isViewAttached()) {
+            return;
+        }
 
+        // show loading
+        getMvpView().showLoading();
+
+        // api call
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setEmail(getMvpView().getEmail());
+        signupRequest.setPassword(getMvpView().getPassword());
+        signupRequest.setConfirmPassword(getMvpView().getConfirmPassword());
+        signupRequest.setName(getMvpView().getName());
+
+        getCompositeDisposable().add(getDataManager()
+                .signup(signupRequest)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(response -> {
+                    getMvpView().hideLoading();
+
+                    if (response == null) {
+                        getMvpView().hideLoading();
+                        return;
+                    }
+
+                    if (!response.getToken().isEmpty()) {
+                        getMvpView().onSignupSuccess();
+                    }
+                }, error -> {
+                    getMvpView().hideLoading();
+                    handleApiError(error);
+                })
+        );
     }
 }

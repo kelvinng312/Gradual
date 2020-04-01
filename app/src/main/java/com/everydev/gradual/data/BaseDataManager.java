@@ -15,7 +15,6 @@ import com.everydev.gradual.data.network.pojo.Response;
 import com.everydev.gradual.data.network.pojo.SignupRequest;
 import com.everydev.gradual.data.network.pojo.SignupResponse;
 import com.everydev.gradual.data.network.pojo.StripeKeyResponse;
-import com.everydev.gradual.data.network.pojo.WrapperResponse;
 import com.everydev.gradual.data.prefs.PreferencesHelper;
 import com.everydev.gradual.data.utils.LoggedInMode;
 import com.everydev.gradual.di.ApplicationContext;
@@ -123,23 +122,18 @@ public class BaseDataManager implements DataManager {
     }
 
     @Override
-    public Single<WrapperResponse<Response>> payFirst(PayFirstRequest payFirstRequest) {
+    public Single<Response> payFirst(PayFirstRequest payFirstRequest) {
         return mApiHelper.payFirst(payFirstRequest);
     }
 
     @Override
-    public Single<WrapperResponse<Response>> payAgain(PayAgainRequest payAgainRequest) {
+    public Single<Response> payAgain(PayAgainRequest payAgainRequest) {
         return mApiHelper.payAgain(payAgainRequest);
     }
 
     @Override
-    public Single<WrapperResponse<Response>> payConfirm(PayConfirmRequest payConfirmRequest) {
+    public Single<Response> payConfirm(PayConfirmRequest payConfirmRequest) {
         return mApiHelper.payConfirm(payConfirmRequest);
-    }
-
-    @Override
-    public Single<WrapperResponse<List<FeedItem>>> getFeedList() {
-        return mApiHelper.getFeedList();
     }
 
     @Override

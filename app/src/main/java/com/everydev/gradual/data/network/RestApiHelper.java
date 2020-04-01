@@ -10,7 +10,6 @@ import com.everydev.gradual.data.network.pojo.Response;
 import com.everydev.gradual.data.network.pojo.SignupRequest;
 import com.everydev.gradual.data.network.pojo.SignupResponse;
 import com.everydev.gradual.data.network.pojo.StripeKeyResponse;
-import com.everydev.gradual.data.network.pojo.WrapperResponse;
 
 import java.util.List;
 
@@ -24,12 +23,9 @@ public interface RestApiHelper {
 
     Single<StripeKeyResponse> stripeKey();
 
-    Single<WrapperResponse<Response>> payFirst(PayFirstRequest payFirstRequest);
+    Single<Response> payFirst(PayFirstRequest payFirstRequest);
 
-    Single<WrapperResponse<Response>> payAgain(PayAgainRequest payAgainRequest);
+    Single<Response> payAgain(PayAgainRequest payAgainRequest);
 
-    Single<WrapperResponse<Response>> payConfirm(PayConfirmRequest payConfirmRequest);
-
-
-    Single<WrapperResponse<List<FeedItem>>> getFeedList();
+    Single<Response> payConfirm(PayConfirmRequest payConfirmRequest);
 }

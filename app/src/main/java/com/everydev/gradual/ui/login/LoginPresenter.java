@@ -28,10 +28,6 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
             return;
         }
 
-        // validate
-        if (!getMvpView().validate())
-            return;
-
         // show loading
         getMvpView().showLoading();
 
@@ -60,26 +56,5 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
                     handleApiError(error);
                 })
         );
-
-//        getCompositeDisposable().add(getDataManager()
-//                .stripeKey()
-//                .subscribeOn(getSchedulerProvider().io())
-//                .observeOn(getSchedulerProvider().ui())
-//                .subscribe(response -> {
-//                    getMvpView().hideLoading();
-//
-//                    StripeKeyResponse data = response.getData();
-//                    if (data == null) {
-//                        getMvpView().hideLoading();
-//                        return;
-//                    }
-//
-//
-//                }, error -> {
-//                    getMvpView().hideLoading();
-//
-//                    getMvpView().onLoginFailed();
-//                })
-//        );
     }
 }

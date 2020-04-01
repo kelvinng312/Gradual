@@ -23,4 +23,5 @@
     <string name="btn_retry">Retry</string>
     <string name="title_home">Home</string>
     <string name="login_failed">Login Failed</string>
+    <string name="password_length">Password should be more than 6 characters</string>
 </resources>

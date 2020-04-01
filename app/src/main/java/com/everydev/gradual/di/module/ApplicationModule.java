@@ -104,13 +104,16 @@ public class ApplicationModule {
      */
     @Provides
     public OkHttpClient provideClient() {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-        return new OkHttpClient.Builder().addInterceptor(interceptor).addInterceptor(chain -> {
-            Request request = chain.request();
-            return chain.proceed(request);
-        }).build();
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            httpClient.addInterceptor(logging);
+        }
+
+        return httpClient.build();
     }
 
     /**

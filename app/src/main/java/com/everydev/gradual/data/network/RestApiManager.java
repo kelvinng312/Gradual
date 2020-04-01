@@ -10,7 +10,6 @@ import com.everydev.gradual.data.network.pojo.Response;
 import com.everydev.gradual.data.network.pojo.SignupRequest;
 import com.everydev.gradual.data.network.pojo.SignupResponse;
 import com.everydev.gradual.data.network.pojo.StripeKeyResponse;
-import com.everydev.gradual.data.network.pojo.WrapperResponse;
 
 import java.util.List;
 
@@ -45,22 +44,17 @@ public class RestApiManager implements RestApiHelper {
     }
 
     @Override
-    public Single<WrapperResponse<Response>> payFirst(PayFirstRequest payFirstRequest) {
+    public Single<Response> payFirst(PayFirstRequest payFirstRequest) {
         return mService.payFirst(payFirstRequest);
     }
 
     @Override
-    public Single<WrapperResponse<Response>> payAgain(PayAgainRequest payAgainRequest) {
+    public Single<Response> payAgain(PayAgainRequest payAgainRequest) {
         return mService.payAgain(payAgainRequest);
     }
 
     @Override
-    public Single<WrapperResponse<Response>> payConfirm(PayConfirmRequest payConfirmRequest) {
+    public Single<Response> payConfirm(PayConfirmRequest payConfirmRequest) {
         return mService.payConfirm(payConfirmRequest);
-    }
-
-    @Override
-    public Single<WrapperResponse<List<FeedItem>>> getFeedList() {
-        return mService.getFeedList();
     }
 }
