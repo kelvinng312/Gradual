@@ -32,12 +32,12 @@ public interface NetworkService {
     Single<StripeKeyResponse> stripeKey();
 
     @POST("donation/pay-first")
-    Single<PayResponse> payFirst(PayFirstRequest payFirstRequest);
+    Single<PayResponse> payFirst(@Body PayFirstRequest payFirstRequest);
 
     @POST("donation/pay-again")
-    Single<PayResponse> payAgain(PayAgainRequest payAgainRequest);
+    Single<PayResponse> payAgain(@Body PayAgainRequest payAgainRequest);
 
     @POST("donation/pay-confirm")
-    Single<PayResponse> payConfirm(PayConfirmRequest payConfirmRequest);
+    Single<PayResponse> payConfirm(@Body PayConfirmRequest payConfirmRequest);
 
 }

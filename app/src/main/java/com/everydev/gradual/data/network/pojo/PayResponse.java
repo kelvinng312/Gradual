@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
 @SuppressWarnings("unused")
 public class PayResponse {
 
+    @SerializedName("status")
+    private String mStatus;
     @SerializedName("error")
     private String mError;
     @SerializedName("requires_action")
@@ -17,6 +19,14 @@ public class PayResponse {
     private String mClientSecret;
     @SerializedName("customer_id")
     private String mCustomerId;
+
+    public String getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(String status) {
+        mStatus = status;
+    }
 
     public String getError() {
         return mError;

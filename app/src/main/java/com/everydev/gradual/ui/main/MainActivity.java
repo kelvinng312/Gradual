@@ -54,6 +54,16 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mLavDonate = findViewById(R.id.lav_donate);
         mLavDonate.setProgress(1f);
         mLavDonate.setOnClickListener(v -> {
+            // validate
+            if (mPresenter.getCustomerId().isEmpty()) {
+                PaymentMethodCreateParams params = mCardInputWidget.getPaymentMethodCreateParams();
+                if (params == null) {
+                    showMessage("Please input Card information correctly");
+                    return;
+                }
+            }
+
+            // start sound
             mLayoutCard.setVisibility(View.INVISIBLE);
 
             mPlayerDonate.seekTo(0);
@@ -63,10 +73,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             mLavDonate.setProgress(0);
             mLavDonate.pauseAnimation();
             mLavDonate.playAnimation();
-
-            // donate
-            PaymentMethodCreateParams params = mCardInputWidget.getPaymentMethodCreateParams();
-            mPresenter.pay(params);
         });
 
         // Success animation
@@ -102,13 +108,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
                 mLavDonate.setProgress(1f);
                 mLavDonate.setVisibility(View.INVISIBLE);
 
-                mPlayerSuccess.seekTo(0);
-                mPlayerSuccess.start();
-
-                // Play success animation
-                mLabSuccess.setProgress(0);
-                mLabSuccess.setRepeatCount(ValueAnimator.INFINITE);
-                mLabSuccess.playAnimation();
+                // donate
+                PaymentMethodCreateParams params = mCardInputWidget.getPaymentMethodCreateParams();
+                mPresenter.pay(params);
             }
         });
 
@@ -139,10 +141,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         super.onDestroy();
     }
 
-    private void pay() {
-
-    }
-
     @Override
     public void showCardInputWidget(boolean show) {
         if (show)
@@ -153,7 +151,20 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     public void onPaymentSuccess() {
-        showMessage("Donation success!");
+        // Play success sound
+        mPlayerSuccess.seekTo(0);
+        mPlayerSuccess.start();
+
+        // Play success animation
+        mLabSuccess.setProgress(0);
+        mLabSuccess.setRepeatCount(ValueAnimator.INFINITE);
+        mLabSuccess.playAnimation();
+    }
+
+    @Override
+    public void onPaymentIncompleted(String description) {
+        mLavDonate.setVisibility(View.VISIBLE);
+        showMessage(description);
     }
 
     @Override

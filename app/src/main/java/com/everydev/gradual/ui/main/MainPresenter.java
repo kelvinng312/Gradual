@@ -42,7 +42,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
 
     @Override
     public void onViewPrepared() {
-        String customerID = getDataManager().getCustomerID().trim();
+        String customerID = getCustomerId();
         if (customerID.isEmpty())
             getMvpView().showCardInputWidget(true);
         else
@@ -54,24 +54,28 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
 
     @Override
     public void pay(PaymentMethodCreateParams params) {
+        // show loading
+        getMvpView().showLoading();
+
         // check if there is a customer ID
         String customerID = getDataManager().getCustomerID().trim();
         if (!customerID.isEmpty()) {
             payWithCustomerID(customerID);
+        } else {
+            // pay with card
+            mStripe.createPaymentMethod(params, new ApiResultCallback<PaymentMethod>() {
+                @Override
+                public void onSuccess(PaymentMethod paymentMethod) {
+                    payWithPaymentMethodID(paymentMethod.id);
+                }
+
+                @Override
+                public void onError(@NotNull Exception e) {
+                    // hide loading
+                    getMvpView().hideLoading();
+                }
+            });
         }
-
-        // pay with card
-        mStripe.createPaymentMethod(params, new ApiResultCallback<PaymentMethod>() {
-            @Override
-            public void onSuccess(PaymentMethod paymentMethod) {
-                payWithPaymentMethodID(paymentMethod.id);
-            }
-
-            @Override
-            public void onError(@NotNull Exception e) {
-
-            }
-        });
     }
 
     @Override
@@ -79,14 +83,18 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
         mStripe.onPaymentResult(requestCode, data, new PaymentResultCallback(this));
     }
 
+    @Override
+    public String getCustomerId() {
+        return getDataManager().getCustomerID().trim();
+    }
+
     private void payWithPaymentMethodID(String paymentMethodID) {
         // check view
         if (!isViewAttached()) {
+            // hide loading
+            getMvpView().hideLoading();
             return;
         }
-
-        // show loading
-        getMvpView().showLoading();
 
         // api call
         PayFirstRequest payFirstRequest = new PayFirstRequest();
@@ -179,19 +187,29 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
         getMvpView().onPaymentSuccess();
     }
 
+    private void onPaymentIncompleted(String description) {
+        getMvpView().onPaymentIncompleted(description);
+    }
 
     // utility function
     private void processPayResponse(PayResponse payResponse) {
-        if (!payResponse.getError().isEmpty()) {
-            getMvpView().showMessage(payResponse.getError());
-            return;
-        }
+        if (payResponse.getStatus().contentEquals("error")) {
+            getMvpView().onPaymentIncompleted(payResponse.getError());
+        } else if (payResponse.getStatus().contentEquals("accumulated")) {
+            getMvpView().onPaymentIncompleted(payResponse.getError());
+        } else if (payResponse.getStatus().contentEquals("success")) {
+            // save customer id
+            if (!payResponse.getCustomerId().isEmpty()) {
+                getDataManager().setCustomerID(payResponse.getCustomerId());
+            }
 
-        if (!payResponse.getClientSecret().isEmpty()) {
-            if (payResponse.isRequiresAction()) {
-                getMvpView().handleNextActionForPayment(mStripe, payResponse.getClientSecret());
-            } else {
-                getMvpView().onPaymentSuccess();
+            // process
+            if (!payResponse.getClientSecret().isEmpty()) {
+                if (payResponse.isRequiresAction()) {
+                    getMvpView().handleNextActionForPayment(mStripe, payResponse.getClientSecret());
+                } else {
+                    getMvpView().onPaymentSuccess();
+                }
             }
         }
     }
@@ -220,7 +238,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
 
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method
-                mainPresenter.getMvpView().showMessage("Donation failed");
+                mainPresenter.onPaymentIncompleted("Donation failed");
 
             } else if (status == PaymentIntent.Status.RequiresConfirmation) {
                 // After handling a required action on the client, the status of the PaymentIntent is
@@ -240,7 +258,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
             }
 
             // Payment request failed – allow retrying using the same payment method
-            mainPresenter.getMvpView().showMessage(e.toString());
+            mainPresenter.onPaymentIncompleted(e.toString());
         }
     }
 }

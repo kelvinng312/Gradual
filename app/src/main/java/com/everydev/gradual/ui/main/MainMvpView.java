@@ -11,5 +11,7 @@ public interface MainMvpView extends MvpView {
 
     void onPaymentSuccess();
 
+    void onPaymentIncompleted(String description);
+
     void handleNextActionForPayment(Stripe stripe, String paymentIntentClientSecret);
 }
