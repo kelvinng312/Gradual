@@ -5,13 +5,12 @@ import android.content.Context;
 import com.everydev.gradual.data.db.AppDatabase;
 import com.everydev.gradual.data.db.model.User;
 import com.everydev.gradual.data.network.RestApiHelper;
-import com.everydev.gradual.data.network.pojo.FeedItem;
 import com.everydev.gradual.data.network.pojo.LoginRequest;
 import com.everydev.gradual.data.network.pojo.LoginResponse;
 import com.everydev.gradual.data.network.pojo.PayAgainRequest;
 import com.everydev.gradual.data.network.pojo.PayConfirmRequest;
 import com.everydev.gradual.data.network.pojo.PayFirstRequest;
-import com.everydev.gradual.data.network.pojo.Response;
+import com.everydev.gradual.data.network.pojo.PayResponse;
 import com.everydev.gradual.data.network.pojo.SignupRequest;
 import com.everydev.gradual.data.network.pojo.SignupResponse;
 import com.everydev.gradual.data.network.pojo.StripeKeyResponse;
@@ -122,17 +121,17 @@ public class BaseDataManager implements DataManager {
     }
 
     @Override
-    public Single<Response> payFirst(PayFirstRequest payFirstRequest) {
+    public Single<PayResponse> payFirst(PayFirstRequest payFirstRequest) {
         return mApiHelper.payFirst(payFirstRequest);
     }
 
     @Override
-    public Single<Response> payAgain(PayAgainRequest payAgainRequest) {
+    public Single<PayResponse> payAgain(PayAgainRequest payAgainRequest) {
         return mApiHelper.payAgain(payAgainRequest);
     }
 
     @Override
-    public Single<Response> payConfirm(PayConfirmRequest payConfirmRequest) {
+    public Single<PayResponse> payConfirm(PayConfirmRequest payConfirmRequest) {
         return mApiHelper.payConfirm(payConfirmRequest);
     }
 
@@ -229,6 +228,26 @@ public class BaseDataManager implements DataManager {
     @Override
     public void logoutUser() {
         mPreferencesHelper.logoutUser();
+    }
+
+    @Override
+    public String getStripeKey() {
+        return mPreferencesHelper.getStripeKey();
+    }
+
+    @Override
+    public void setStripeKey(String stripeKey) {
+        mPreferencesHelper.setStripeKey(stripeKey);
+    }
+
+    @Override
+    public String getCustomerID() {
+        return mPreferencesHelper.getCustomerID();
+    }
+
+    @Override
+    public void setCustomerID(String customerID) {
+        mPreferencesHelper.setCustomerID(customerID);
     }
 
 

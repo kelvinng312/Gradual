@@ -1,11 +1,14 @@
 package com.everydev.gradual.ui.main;
 
-import com.everydev.gradual.ui.base.MvpPresenter;
+import android.content.Intent;
 
-/**
- * Created on : Feb 11, 2019
- * Author     : AndroidWave
- */
+import com.everydev.gradual.ui.base.MvpPresenter;
+import com.stripe.android.model.PaymentMethodCreateParams;
+
 public interface MainMvpPresenter<V extends MainMvpView> extends MvpPresenter<V> {
     void onViewPrepared();
+
+    void pay(PaymentMethodCreateParams params);
+
+    void onPaymentResult(int requestCode, Intent data);
 }

@@ -14,6 +14,8 @@ public class LoginResponse {
     private String mName;
     @SerializedName("token")
     private String mToken;
+    @SerializedName("publishableKey")
+    private String mPublishableKey;
 
     public String getEmail() {
         return mEmail;
@@ -47,4 +49,11 @@ public class LoginResponse {
         mToken = token;
     }
 
+    public String getPublishableKey() {
+        return mPublishableKey;
+    }
+
+    public void setPublishableKey(String publishableKey) {
+        mPublishableKey = publishableKey;
+    }
 }

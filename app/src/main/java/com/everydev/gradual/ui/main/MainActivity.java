@@ -4,29 +4,21 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.everydev.gradual.R;
-import com.everydev.gradual.data.network.pojo.FeedItem;
 import com.everydev.gradual.ui.base.BaseActivity;
-import com.everydev.gradual.utils.DividerItemDecoration;
+import com.stripe.android.Stripe;
+import com.stripe.android.model.PaymentMethodCreateParams;
 import com.stripe.android.view.CardInputWidget;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.Nullable;
 
 public class MainActivity extends BaseActivity implements MainMvpView {
     @Inject
@@ -72,6 +64,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             mLavDonate.pauseAnimation();
             mLavDonate.playAnimation();
 
+            // donate
+            PaymentMethodCreateParams params = mCardInputWidget.getPaymentMethodCreateParams();
+            mPresenter.pay(params);
         });
 
         // Success animation
@@ -136,4 +131,43 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mPresenter.onViewPrepared();
     }
 
+    @Override
+    protected void onDestroy() {
+        mPlayerDonate.release();
+        mPlayerSuccess.release();
+
+        super.onDestroy();
+    }
+
+    private void pay() {
+
+    }
+
+    @Override
+    public void showCardInputWidget(boolean show) {
+        if (show)
+            mLayoutCard.setVisibility(View.VISIBLE);
+        else
+            mLayoutCard.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onPaymentSuccess() {
+        showMessage("Donation success!");
+    }
+
+    @Override
+    public void handleNextActionForPayment(Stripe stripe, String paymentIntentClientSecret) {
+        runOnUiThread(() -> {
+            stripe.handleNextActionForPayment(MainActivity.this, paymentIntentClientSecret);
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Handle the result of stripe.confirmPayment
+        mPresenter.onPaymentResult(requestCode, data);
+    }
 }

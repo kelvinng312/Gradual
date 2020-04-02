@@ -18,10 +18,6 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * Created on : Feb 11, 2019
- * Author     : AndroidWave
- */
 public class RssAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final String TAG = "RssAdapter";
     public static final int VIEW_TYPE_EMPTY = 0;

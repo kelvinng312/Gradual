@@ -42,12 +42,13 @@ public class SignupPresenter<V extends SignupMvpView> extends BasePresenter<V>
                 .subscribe(response -> {
                     getMvpView().hideLoading();
 
-                    if (response == null) {
-                        getMvpView().hideLoading();
+                    if (response == null)
                         return;
-                    }
 
                     if (!response.getToken().isEmpty()) {
+                        getDataManager().setUserId(response.getId());
+                        getDataManager().setStripeKey(response.getPublishableKey());
+
                         getMvpView().onSignupSuccess();
                     }
                 }, error -> {

@@ -1,9 +1,5 @@
 package com.everydev.gradual.root;
 
-/**
- * Created on : Feb 11, 2019
- * Author     : AndroidWave
- */
 public class AppConstant {
 
     public static final String SHARED_PREF = "wave_pref_default";

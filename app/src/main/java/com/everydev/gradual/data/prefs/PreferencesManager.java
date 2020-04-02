@@ -22,6 +22,9 @@ public class PreferencesManager implements PreferencesHelper {
     private static final String PREF_KEY_USER_PROFILE_PIC_URL = "PREF_KEY_USER_PROFILE_PIC_URL";
     private static final String PREF_KEY_COACH_MARK = "PREF_KEY_COACH_MARK";
 
+    private static final String PREF_KEY_STRIPE_KEY = "PREF_KEY_STRIPE_KEY";
+    private static final String PREF_KEY_CUSTOMER_ID = "PREF_KEY_CUSTOMER_ID";
+
     private final SharedPreferences mPrefs;
     private Context mAppContext;
 
@@ -135,5 +138,25 @@ public class PreferencesManager implements PreferencesHelper {
     @Override
     public void logoutUser() {
         mPrefs.edit().clear().apply();
+    }
+
+    @Override
+    public String getStripeKey() {
+        return mPrefs.getString(PREF_KEY_STRIPE_KEY, "");
+    }
+
+    @Override
+    public void setStripeKey(String stripeKey) {
+        mPrefs.edit().putString(PREF_KEY_STRIPE_KEY, stripeKey).apply();
+    }
+
+    @Override
+    public String getCustomerID() {
+        return mPrefs.getString(PREF_KEY_CUSTOMER_ID, "");
+    }
+
+    @Override
+    public void setCustomerID(String customerID) {
+        mPrefs.edit().putString(PREF_KEY_CUSTOMER_ID, customerID).apply();
     }
 }

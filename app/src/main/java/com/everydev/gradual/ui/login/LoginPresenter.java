@@ -43,12 +43,13 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
                 .subscribe(response -> {
                     getMvpView().hideLoading();
 
-                    if (response == null) {
-                        getMvpView().hideLoading();
+                    if (response == null)
                         return;
-                    }
 
                     if (!response.getToken().isEmpty()) {
+                        getDataManager().setUserId(response.getId());
+                        getDataManager().setStripeKey(response.getPublishableKey());
+
                         getMvpView().onLoginSuccess();
                     }
                 }, error -> {

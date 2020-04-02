@@ -8,6 +8,8 @@ public class PayFirstRequest {
 
     @SerializedName("user_id")
     private Long mUserId;
+    @SerializedName("payment_method_id")
+    private String mPaymentMethodId;
 
     public Long getUserId() {
         return mUserId;
@@ -17,4 +19,11 @@ public class PayFirstRequest {
         mUserId = userId;
     }
 
+    public String getPaymentMethodId() {
+        return mPaymentMethodId;
+    }
+
+    public void setPaymentMethodId(String paymentMethodId) {
+        mPaymentMethodId = paymentMethodId;
+    }
 }

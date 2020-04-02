@@ -40,4 +40,13 @@ public interface PreferencesHelper {
     void setFirstTime(boolean firstTime);
 
     void logoutUser();
+
+    //
+    String getStripeKey();
+
+    void setStripeKey(String stripeKey);
+
+    String getCustomerID();
+
+    void setCustomerID(String customerID);
 }
