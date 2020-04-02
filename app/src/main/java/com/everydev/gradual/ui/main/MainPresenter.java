@@ -73,6 +73,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
                 public void onError(@NotNull Exception e) {
                     // hide loading
                     getMvpView().hideLoading();
+                    getMvpView().onPaymentIncompleted(e.toString());
                 }
             });
         }
@@ -93,6 +94,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
         if (!isViewAttached()) {
             // hide loading
             getMvpView().hideLoading();
+            getMvpView().onPaymentIncompleted("");
             return;
         }
 
@@ -114,7 +116,8 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
                     processPayResponse(response);
                 }, error -> {
                     getMvpView().hideLoading();
-                    handleApiError(error);
+//                    handleApiError(error);
+                    getMvpView().onPaymentIncompleted(error.toString());
                 })
         );
     }
@@ -146,7 +149,8 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
                     processPayResponse(response);
                 }, error -> {
                     getMvpView().hideLoading();
-                    handleApiError(error);
+//                    handleApiError(error);
+                    getMvpView().onPaymentIncompleted(error.toString());
                 })
         );
     }
@@ -178,7 +182,8 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
                     processPayResponse(response);
                 }, error -> {
                     getMvpView().hideLoading();
-                    handleApiError(error);
+//                    handleApiError(error);
+                    getMvpView().onPaymentIncompleted(error.toString());
                 })
         );
     }

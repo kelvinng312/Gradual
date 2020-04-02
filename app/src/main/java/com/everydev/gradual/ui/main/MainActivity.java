@@ -45,7 +45,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         getActivityComponent().inject(this);
         mPresenter.onAttach(MainActivity.this);
         setUp();
-
     }
 
     @Override

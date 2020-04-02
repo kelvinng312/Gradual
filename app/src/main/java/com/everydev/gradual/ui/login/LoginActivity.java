@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.everydev.gradual.BuildConfig;
 import com.everydev.gradual.R;
 import com.everydev.gradual.ui.base.BaseActivity;
 import com.everydev.gradual.ui.main.MainActivity;
@@ -59,9 +60,11 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
             finish();
         });
 
-        // test
-        mEdtEmail.setText("test5@gmail.com");
-        mEdtPassword.setText("11111111");
+        if (BuildConfig.DEBUG) {
+            // test
+            mEdtEmail.setText("test5@gmail.com");
+            mEdtPassword.setText("11111111");
+        }
     }
 
     @Override

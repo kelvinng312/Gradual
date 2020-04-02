@@ -18,6 +18,8 @@ import com.everydev.gradual.di.DatabaseInfo;
 import com.everydev.gradual.di.PreferenceInfo;
 import com.everydev.gradual.root.AppConstant;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -104,7 +106,10 @@ public class ApplicationModule {
      */
     @Provides
     public OkHttpClient provideClient() {
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(1, TimeUnit.MINUTES)
+                .writeTimeout(1, TimeUnit.MINUTES);
 
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();

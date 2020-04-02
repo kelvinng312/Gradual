@@ -48,6 +48,7 @@ public class SignupPresenter<V extends SignupMvpView> extends BasePresenter<V>
                     if (!response.getToken().isEmpty()) {
                         getDataManager().setUserId(response.getId());
                         getDataManager().setStripeKey(response.getPublishableKey());
+                        getDataManager().setCustomerID(response.getCustomerID());
 
                         getMvpView().onSignupSuccess();
                     }

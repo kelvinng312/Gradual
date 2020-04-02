@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('E:\\keyfile.jks')
+            storePassword 'uitc2018'
+            keyAlias = 'key0'
+            keyPassword 'uitc2018'
+        }
+    }
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.everydev.gradual"
@@ -9,6 +17,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
 //        buildConfigField("String", "API_KEY", "\"REPLACE YOUR API_KEY\"")
     }
     buildTypes {

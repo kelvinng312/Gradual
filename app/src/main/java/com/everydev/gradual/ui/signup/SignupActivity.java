@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.everydev.gradual.BuildConfig;
 import com.everydev.gradual.R;
 import com.everydev.gradual.ui.base.BaseActivity;
 import com.everydev.gradual.ui.login.LoginActivity;
@@ -59,6 +60,14 @@ public class SignupActivity extends BaseActivity implements SignupMvpView {
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             finish();
         });
+
+        if (BuildConfig.DEBUG) {
+            // test
+            mEdtEmail.setText("test1@gmail.com");
+            mEdtPassword.setText("11111111");
+            mEdtConfirmPassword.setText("11111111");
+            mEdtName.setText("test person 1");
+        }
     }
 
     @Override

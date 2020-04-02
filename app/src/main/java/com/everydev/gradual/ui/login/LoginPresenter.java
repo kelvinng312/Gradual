@@ -49,6 +49,7 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
                     if (!response.getToken().isEmpty()) {
                         getDataManager().setUserId(response.getId());
                         getDataManager().setStripeKey(response.getPublishableKey());
+                        getDataManager().setCustomerID(response.getCustomerID());
 
                         getMvpView().onLoginSuccess();
                     }
