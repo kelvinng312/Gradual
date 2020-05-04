@@ -5,4 +5,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="_8dp">8dp</dimen>
     <dimen name="_4dp">4dp</dimen>
+    <dimen name="normal_size">18sp</dimen>
+    <dimen name="large_size">22dp</dimen>
 </resources>

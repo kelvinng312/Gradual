@@ -50,8 +50,8 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
                         getDataManager().setUserId(response.getId());
                         getDataManager().setStripeKey(response.getPublishableKey());
                         getDataManager().setCustomerID(response.getCustomerID());
-
-                        getMvpView().onLoginSuccess();
+                        Long userId = response.getId();
+                        getMvpView().onLoginSuccess(userId);
                     }
                 }, error -> {
                     getMvpView().hideLoading();

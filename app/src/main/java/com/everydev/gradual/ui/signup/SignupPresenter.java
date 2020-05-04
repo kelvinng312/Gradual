@@ -50,7 +50,7 @@ public class SignupPresenter<V extends SignupMvpView> extends BasePresenter<V>
                         getDataManager().setStripeKey(response.getPublishableKey());
                         getDataManager().setCustomerID(response.getCustomerID());
 
-                        getMvpView().onSignupSuccess();
+                        getMvpView().onSignupSuccess(response.getId());
                     }
                 }, error -> {
                     getMvpView().hideLoading();

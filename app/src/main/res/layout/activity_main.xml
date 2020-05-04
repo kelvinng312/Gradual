@@ -44,6 +44,27 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
+        <ImageView
+            android:id="@+id/sendImageView"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="2"/>
+
+        <TextView
+            android:id="@+id/tbSendName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/large_size"
+            android:layout_marginBottom="5dp"/>
+
         <LinearLayout
             android:id="@+id/layout_card"
             android:layout_width="match_parent"

@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.everydev.gradual.di.ActivityContext;
 import com.everydev.gradual.di.PerActivity;
+import com.everydev.gradual.ui.donees.DoneesMvpPresenter;
+import com.everydev.gradual.ui.donees.DoneesMvpView;
+import com.everydev.gradual.ui.donees.DoneesPresenter;
 import com.everydev.gradual.ui.login.LoginMvpPresenter;
 import com.everydev.gradual.ui.login.LoginMvpView;
 import com.everydev.gradual.ui.login.LoginPresenter;
@@ -67,7 +70,6 @@ public class ActivityModule {
         return presenter;
     }
 
-
     @Provides
     @PerActivity
     MainMvpPresenter<MainMvpView> provideMainPresenter(MainPresenter<MainMvpView> presenter) {
@@ -77,6 +79,12 @@ public class ActivityModule {
     @Provides
     @PerActivity
     SignupMvpPresenter<SignupMvpView> provideSignupPresenter(SignupPresenter<SignupMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerActivity
+    DoneesMvpPresenter<DoneesMvpView> provideDoneesPresenter(DoneesPresenter<DoneesMvpView> presenter) {
         return presenter;
     }
 

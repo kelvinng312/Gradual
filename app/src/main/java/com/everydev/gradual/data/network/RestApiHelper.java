@@ -1,5 +1,6 @@
 package com.everydev.gradual.data.network;
 
+import com.everydev.gradual.data.network.pojo.Donee;
 import com.everydev.gradual.data.network.pojo.LoginRequest;
 import com.everydev.gradual.data.network.pojo.LoginResponse;
 import com.everydev.gradual.data.network.pojo.PayAgainRequest;
@@ -9,6 +10,8 @@ import com.everydev.gradual.data.network.pojo.PayResponse;
 import com.everydev.gradual.data.network.pojo.SignupRequest;
 import com.everydev.gradual.data.network.pojo.SignupResponse;
 import com.everydev.gradual.data.network.pojo.StripeKeyResponse;
+
+import java.util.List;
 
 import io.reactivex.Single;
 
@@ -25,4 +28,6 @@ public interface RestApiHelper {
     Single<PayResponse> payAgain(PayAgainRequest payAgainRequest);
 
     Single<PayResponse> payConfirm(PayConfirmRequest payConfirmRequest);
+
+    Single<List<Donee>> getDonees();
 }

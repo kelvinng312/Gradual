@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.everydev.gradual.BuildConfig;
 import com.everydev.gradual.R;
 import com.everydev.gradual.ui.base.BaseActivity;
+import com.everydev.gradual.ui.donees.DoneesActivity;
 import com.everydev.gradual.ui.main.MainActivity;
 import com.everydev.gradual.ui.signup.SignupActivity;
 
@@ -62,7 +63,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
         if (BuildConfig.DEBUG) {
             // test
-            mEdtEmail.setText("test5@gmail.com");
+            mEdtEmail.setText("test1@gmail.com");
             mEdtPassword.setText("11111111");
         }
     }
@@ -74,8 +75,10 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     }
 
     @Override
-    public void onLoginSuccess() {
-        startActivity(MainActivity.getStartIntent(this));
+    public void onLoginSuccess(Long userId) {
+//        startActivity(MainActivity.getStartIntent(this));
+        startActivity(DoneesActivity.getStartIntent(this, userId));
+
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         finish();
     }

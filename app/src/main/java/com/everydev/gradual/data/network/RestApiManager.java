@@ -1,5 +1,6 @@
 package com.everydev.gradual.data.network;
 
+import com.everydev.gradual.data.network.pojo.Donee;
 import com.everydev.gradual.data.network.pojo.LoginRequest;
 import com.everydev.gradual.data.network.pojo.LoginResponse;
 import com.everydev.gradual.data.network.pojo.PayAgainRequest;
@@ -9,6 +10,8 @@ import com.everydev.gradual.data.network.pojo.PayResponse;
 import com.everydev.gradual.data.network.pojo.SignupRequest;
 import com.everydev.gradual.data.network.pojo.SignupResponse;
 import com.everydev.gradual.data.network.pojo.StripeKeyResponse;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -53,5 +56,10 @@ public class RestApiManager implements RestApiHelper {
     @Override
     public Single<PayResponse> payConfirm(PayConfirmRequest payConfirmRequest) {
         return mService.payConfirm(payConfirmRequest);
+    }
+
+    @Override
+    public Single<List<Donee>> getDonees() {
+        return mService.getDonees();
     }
 }

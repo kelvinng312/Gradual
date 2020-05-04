@@ -5,6 +5,7 @@ import android.content.Context;
 import com.everydev.gradual.data.db.AppDatabase;
 import com.everydev.gradual.data.db.model.User;
 import com.everydev.gradual.data.network.RestApiHelper;
+import com.everydev.gradual.data.network.pojo.Donee;
 import com.everydev.gradual.data.network.pojo.LoginRequest;
 import com.everydev.gradual.data.network.pojo.LoginResponse;
 import com.everydev.gradual.data.network.pojo.PayAgainRequest;
@@ -250,5 +251,8 @@ public class BaseDataManager implements DataManager {
         mPreferencesHelper.setCustomerID(customerID);
     }
 
-
+    @Override
+    public Single<List<Donee>> getDonees() {
+        return mApiHelper.getDonees();
+    }
 }

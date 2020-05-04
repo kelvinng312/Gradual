@@ -3,6 +3,7 @@ package com.everydev.gradual.di.component;
 
 import com.everydev.gradual.di.PerActivity;
 import com.everydev.gradual.di.module.ActivityModule;
+import com.everydev.gradual.ui.donees.DoneesActivity;
 import com.everydev.gradual.ui.login.LoginActivity;
 import com.everydev.gradual.ui.main.MainActivity;
 import com.everydev.gradual.ui.signup.SignupActivity;
@@ -23,4 +24,6 @@ public interface ActivityComponent {
     void inject(SignupActivity signupActivity);
 
     void inject(MainActivity mainActivity);
+
+    void inject(DoneesActivity doneesActivity);
 }

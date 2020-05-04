@@ -26,10 +26,10 @@ android {
 //            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8000/api/\"")
 
             // wifi
-            buildConfigField("String", "BASE_URL", "\"http://192.168.2.125:8000/api/\"")
+//            buildConfigField("String", "BASE_URL", "\"http://192.168.2.125:8000/api/\"")
 
             // product
-//            buildConfigField("String", "BASE_URL", "\"https://getgradual.com/api/\"")
+            buildConfigField("String", "BASE_URL", "\"https://getgradual.com/api/\"")
         }
         release {
             buildConfigField("String", "BASE_URL", "\"https://getgradual.com/api/\"")
@@ -99,4 +99,8 @@ dependencies {
 
     // Stripe Android SDK
     implementation 'com.stripe:stripe-android:14.2.1'
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 }

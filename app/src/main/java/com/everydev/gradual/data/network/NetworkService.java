@@ -9,6 +9,9 @@ import com.everydev.gradual.data.network.pojo.PayResponse;
 import com.everydev.gradual.data.network.pojo.SignupRequest;
 import com.everydev.gradual.data.network.pojo.SignupResponse;
 import com.everydev.gradual.data.network.pojo.StripeKeyResponse;
+import com.everydev.gradual.data.network.pojo.Donee;
+
+import java.util.List;
 
 import io.reactivex.Single;
 import retrofit2.http.Body;
@@ -40,4 +43,6 @@ public interface NetworkService {
     @POST("donation/pay-confirm")
     Single<PayResponse> payConfirm(@Body PayConfirmRequest payConfirmRequest);
 
+    @GET("donees")
+    Single<List<Donee>> getDonees();
 }

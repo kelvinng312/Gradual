@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.bumptech.glide.Glide;
 import com.everydev.gradual.R;
 import com.everydev.gradual.ui.base.BaseActivity;
 import com.stripe.android.Stripe;
@@ -33,8 +36,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     private LinearLayout mLayoutCard;
     private CardInputWidget mCardInputWidget;
 
-    public static Intent getStartIntent(Context context) {
+    public static Intent getStartIntent(Context context, String name, String avatar, String pubkey) {
         Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("NAME", name);
+        intent.putExtra("AVATAR", avatar);
+        intent.putExtra("PUBKEY", pubkey);
         return intent;
     }
 
@@ -45,6 +51,18 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         getActivityComponent().inject(this);
         mPresenter.onAttach(MainActivity.this);
         setUp();
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            String name = intent.getExtras().getString("NAME");
+            String avatar = intent.getExtras().getString("AVATAR");
+            String pubkey = intent.getExtras().getString("PUBKEY");
+            ImageView sendImageView = findViewById(R.id.sendImageView);
+            Glide.with(sendImageView).load(avatar).into(sendImageView);
+
+            TextView tbSend = findViewById(R.id.tbSendName);
+            tbSend.setText(name);
+        }
     }
 
     @Override

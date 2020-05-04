@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.everydev.gradual.BuildConfig;
 import com.everydev.gradual.R;
 import com.everydev.gradual.ui.base.BaseActivity;
+import com.everydev.gradual.ui.donees.DoneesActivity;
 import com.everydev.gradual.ui.login.LoginActivity;
 import com.everydev.gradual.ui.main.MainActivity;
 
@@ -71,8 +72,8 @@ public class SignupActivity extends BaseActivity implements SignupMvpView {
     }
 
     @Override
-    public void onSignupSuccess() {
-        startActivity(MainActivity.getStartIntent(this));
+    public void onSignupSuccess(Long userId) {
+        startActivity(DoneesActivity.getStartIntent(this, userId));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         finish();
     }
