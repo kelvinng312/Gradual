@@ -133,7 +133,7 @@ class MyAdapter extends RecyclerView.Adapter
             @Override
             public void onClick(View v) {
                 try {
-                    _context.startActivity(MainActivity.getStartIntent(_context, name, avatar, pubkey));
+                    _context.startActivity(MainActivity.getStartIntent(_context, sendUserId, name, avatar, pubkey));
                 } catch(Exception e) {
                     e.printStackTrace();
                 }

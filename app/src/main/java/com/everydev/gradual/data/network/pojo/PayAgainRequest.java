@@ -10,6 +10,8 @@ public class PayAgainRequest {
     private Long mUserId;
     @SerializedName("customer_id")
     private String mCustomerId;
+    @SerializedName("receive_user_id")
+    private Long mReceiveUserId;
 
     public Long getUserId() {
         return mUserId;
@@ -17,6 +19,14 @@ public class PayAgainRequest {
 
     public void setUserId(Long userId) {
         mUserId = userId;
+    }
+
+    public Long getReceiveUserId() {
+        return mReceiveUserId;
+    }
+
+    public void setReceiveUserId(Long receiveUserId) {
+        mReceiveUserId = receiveUserId;
     }
 
     public String getCustomerId() {

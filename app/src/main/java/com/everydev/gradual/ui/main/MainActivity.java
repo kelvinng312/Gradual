@@ -36,8 +36,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     private LinearLayout mLayoutCard;
     private CardInputWidget mCardInputWidget;
 
-    public static Intent getStartIntent(Context context, String name, String avatar, String pubkey) {
+    public static Intent getStartIntent(Context context, Long receiveUserId, String name, String avatar, String pubkey) {
         Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("USERID", receiveUserId);
         intent.putExtra("NAME", name);
         intent.putExtra("AVATAR", avatar);
         intent.putExtra("PUBKEY", pubkey);
@@ -54,14 +55,19 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
         Intent intent = getIntent();
         if (intent != null) {
+            Long receiveUserId = intent.getExtras().getLong("USERID");
+            String pubkey = intent.getExtras().getString("PUBKEY");
+
             String name = intent.getExtras().getString("NAME");
             String avatar = intent.getExtras().getString("AVATAR");
-            String pubkey = intent.getExtras().getString("PUBKEY");
+
             ImageView sendImageView = findViewById(R.id.sendImageView);
             Glide.with(sendImageView).load(avatar).into(sendImageView);
 
             TextView tbSend = findViewById(R.id.tbSendName);
             tbSend.setText(name);
+
+            mPresenter.setDonee(receiveUserId, pubkey);
         }
     }
 

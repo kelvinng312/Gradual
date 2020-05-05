@@ -32,6 +32,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
 
     private Application mApplicationContext;
     private Stripe mStripe;
+    public Long receiveUserId;
 
     @Inject
     public MainPresenter(DataManager manager, SchedulerProvider schedulerProvider, CompositeDisposable compositeDisposable,
@@ -47,9 +48,6 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
             getMvpView().showCardInputWidget(true);
         else
             getMvpView().showCardInputWidget(false);
-
-        String stripeKey = getDataManager().getStripeKey().trim();
-        mStripe = new Stripe(mApplicationContext, stripeKey);
     }
 
     @Override
@@ -89,6 +87,14 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
         return getDataManager().getCustomerID().trim();
     }
 
+    @Override
+    public void setDonee(Long receiveUserId, String pubKey) {
+        //String stripeKey = getDataManager().getStripeKey().trim();
+        this.receiveUserId =  receiveUserId;
+        String stripeKey = pubKey;
+        mStripe = new Stripe(mApplicationContext, stripeKey);
+    }
+
     private void payWithPaymentMethodID(String paymentMethodID) {
         // check view
         if (!isViewAttached()) {
@@ -102,6 +108,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
         PayFirstRequest payFirstRequest = new PayFirstRequest();
         payFirstRequest.setUserId(getDataManager().getUserId());
         payFirstRequest.setPaymentMethodId(paymentMethodID);
+        payFirstRequest.setReceiveUserId(this.receiveUserId);
 
         getCompositeDisposable().add(getDataManager()
                 .payFirst(payFirstRequest)
@@ -135,6 +142,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
         PayAgainRequest payAgainRequest = new PayAgainRequest();
         payAgainRequest.setUserId(getDataManager().getUserId());
         payAgainRequest.setCustomerId(customerID);
+        payAgainRequest.setReceiveUserId(this.receiveUserId);
 
         getCompositeDisposable().add(getDataManager()
                 .payAgain(payAgainRequest)

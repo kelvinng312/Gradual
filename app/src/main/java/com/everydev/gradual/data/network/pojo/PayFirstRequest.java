@@ -10,6 +10,8 @@ public class PayFirstRequest {
     private Long mUserId;
     @SerializedName("payment_method_id")
     private String mPaymentMethodId;
+    @SerializedName("receive_user_id")
+    private Long mReceiveUserId;
 
     public Long getUserId() {
         return mUserId;
@@ -17,6 +19,14 @@ public class PayFirstRequest {
 
     public void setUserId(Long userId) {
         mUserId = userId;
+    }
+
+    public Long getReceiveUserId() {
+        return mReceiveUserId;
+    }
+
+    public void setReceiveUserId(Long receiveUserId) {
+        mReceiveUserId = receiveUserId;
     }
 
     public String getPaymentMethodId() {

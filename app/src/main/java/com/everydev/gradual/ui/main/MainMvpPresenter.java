@@ -13,4 +13,6 @@ public interface MainMvpPresenter<V extends MainMvpView> extends MvpPresenter<V>
     void onPaymentResult(int requestCode, Intent data);
 
     String getCustomerId();
+
+    void setDonee(Long sendUserId, String pubKey);
 }
