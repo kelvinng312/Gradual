@@ -29,10 +29,10 @@ android {
             //buildConfigField("String", "BASE_URL", "\"http://192.168.2.111:8000/api/\"")
 
             // product
-            buildConfigField("String", "BASE_URL", "\"https://getgradual.com/api/\"")
+            buildConfigField("String", "BASE_URL", "\"https://app.getgradual.com/api/\"")
         }
         release {
-            buildConfigField("String", "BASE_URL", "\"https://getgradual.com/api/\"")
+            buildConfigField("String", "BASE_URL", "\"https://app.getgradual.com/api/\"")
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
