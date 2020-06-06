@@ -7,7 +7,10 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +23,7 @@ import com.everydev.gradual.root.WaveApp;
 import com.everydev.gradual.utils.CommonUtils;
 import com.everydev.gradual.utils.NetworkUtils;
 import com.google.android.material.snackbar.Snackbar;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -122,7 +126,20 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
     @Override
     public void showMessage(String message) {
         if (message != null) {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "message", Toast.LENGTH_SHORT).show();
+//            MDToast mdToast = MDToast.makeText(this, message, MDToast.TYPE_INFO, MDToast.LENGTH_LONG);
+//            mdToast.show();
+            LayoutInflater inflater = getLayoutInflater();
+            View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_layout));
+            TextView tv = (TextView) layout.findViewById(R.id.txtvw);
+            tv.setText(message);
+            Toast toast = new Toast(this);
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 300);
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(layout);
+            toast.show();
+
         } else {
             Toast.makeText(this, getString(R.string.some_error), Toast.LENGTH_SHORT).show();
         }
