@@ -18,6 +18,8 @@ public class LoginResponse {
     private String mPublishableKey;
     @SerializedName("customer_id")
     private String mCustomerID;
+    @SerializedName("pending")
+    private Long mPending;
 
     public String getEmail() {
         return mEmail;
@@ -65,5 +67,13 @@ public class LoginResponse {
 
     public void setCustomerID(String customerID) {
         mCustomerID = customerID;
+    }
+
+    public Long getPending() {
+        return mPending;
+    }
+
+    public void setPending(Long pending) {
+        mPending = pending;
     }
 }

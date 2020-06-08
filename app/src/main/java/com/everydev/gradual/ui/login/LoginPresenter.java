@@ -51,6 +51,7 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
                         getDataManager().setStripeKey(response.getPublishableKey());
                         getDataManager().setCustomerID(response.getCustomerID());
                         Long userId = response.getId();
+                        Long pending = response.getPending();
                         getMvpView().onLoginSuccess(userId);
                     }
                 }, error -> {
